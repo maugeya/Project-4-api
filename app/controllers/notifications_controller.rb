@@ -46,6 +46,6 @@ class NotificationsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def notification_params
-      params.require(:notification).permit(:read, :comment_id, :receiver_id)
+      params.permit(:read, :comment_id, :receiver_id)
     end
 end
