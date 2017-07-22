@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170721143710) do
+ActiveRecord::Schema.define(version: 20170722124305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20170721143710) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.boolean "read"
+    t.boolean "read", default: false
     t.bigint "comment_id"
     t.integer "receiver_id"
     t.datetime "created_at", null: false
