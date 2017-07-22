@@ -12,7 +12,7 @@ topic = Topic.create!([
   ])
 
 user = User.create!([
-  { username: "mickyginger", firstname: "Mike", lastname: "Hayden" },
-  { username: "eisacke", firstname: "Emily", lastname: "Isacke" },
-  { username: "markyjangles", firstname: "Marc", lastname: "De Vois" }
+  { username: "mickyginger", firstname: "Mike", lastname: "Hayden", password: "password", password_confirmation: "password" },
+  { username: "eisacke", firstname: "Emily", lastname: "Isacke", password: "password", password_confirmation: "password" },
+  { username: "markyjangles", firstname: "Marc", lastname: "De Vois", password: "password", password_confirmation: "password" }
 ])

@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     resources :comments
     resources :posts
     resources :topics
-    resources :users
+    resources :users, except: [:create]
+
+    post 'register', to: 'authentications#register'
+    post 'login', to: 'authentications#login'
   end
 end

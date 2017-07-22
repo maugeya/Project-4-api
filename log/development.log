@@ -1862,3 +1862,326 @@ Processing by PostsController#index as */*
 Completed 200 OK in 16ms (Views: 13.5ms | ActiveRecord: 2.2ms)
 
 
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (86.5ms)[0m  [1m[35mTRUNCATE users RESTART IDENTITY CASCADE[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "topics" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "LGBT+"], ["created_at", "2017-07-22 13:34:56.456975"], ["updated_at", "2017-07-22 13:34:56.456975"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "topics" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Environment"], ["created_at", "2017-07-22 13:34:56.460606"], ["updated_at", "2017-07-22 13:34:56.460606"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "password_digest") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["username", "mickyginger"], ["firstname", "Mike"], ["lastname", "Hayden"], ["created_at", "2017-07-22 13:34:56.566425"], ["updated_at", "2017-07-22 13:34:56.566425"], ["password_digest", "$2a$10$/P19zXyluKHBQu5iko5d/.MhUn21qTpJoMQJzock7NiizdWurAvvW"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "password_digest") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["username", "eisacke"], ["firstname", "Emily"], ["lastname", "Isacke"], ["created_at", "2017-07-22 13:34:56.650083"], ["updated_at", "2017-07-22 13:34:56.650083"], ["password_digest", "$2a$10$hKgdmYTXO7hRfpyCSF3L8.u/K3YTBo2NkUU3Ef3vINzkU5GAUNWV2"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "password_digest") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["username", "markyjangles"], ["firstname", "Marc"], ["lastname", "De Vois"], ["created_at", "2017-07-22 13:34:56.725339"], ["updated_at", "2017-07-22 13:34:56.725339"], ["password_digest", "$2a$10$oIRQRPadpq3/SRfvrWxSg.V/UNO8aEzUnppcmRchzWw14SVLy4tJa"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started POST "/api/register" for 127.0.0.1 at 2017-07-22 14:45:19 +0100
+  [1m[35m (16.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AuthenticationsController#register as */*
+  Parameters: {"username"=>"BigAnge", "firstname"=>"Angela", "lastname"=>"Maugey", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication"=>{"username"=>"BigAnge", "firstname"=>"Angela", "lastname"=>"Maugey", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+Unpermitted parameters: :firstname, :lastname, :authentication
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (12.5ms)[0m  [1m[32mINSERT INTO "users" ("username", "created_at", "updated_at", "password_digest") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["username", "BigAnge"], ["created_at", "2017-07-22 13:45:20.892249"], ["updated_at", "2017-07-22 13:45:20.892249"], ["password_digest", "$2a$10$SX2eWX6q/dSUElQs2lKlqOnIOZeL3JsiaBwHQZ0PXDMQ.imHuIYKm"]]
+  [1m[35m (15.1ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mPost Load (42.6ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 4]]
+[active_model_serializers]   [1m[36mComment Load (29.5ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 4]]
+[active_model_serializers]   [1m[36mNotification Load (26.5ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 4]]
+[active_model_serializers]   [1m[36mTopic Load (41.1ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 4]]
+[active_model_serializers] Rendered UserSerializer with ActiveModelSerializers::Adapter::Attributes (312.37ms)
+Completed 200 OK in 729ms (Views: 374.3ms | ActiveRecord: 194.6ms)
+
+
+Started POST "/api/register" for 127.0.0.1 at 2017-07-22 14:46:41 +0100
+Processing by AuthenticationsController#register as */*
+  Parameters: {"username"=>"BigAnge", "firstname"=>"Angela", "lastname"=>"Maugey", "email"=>"ange@email.com", "admin"=>false, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication"=>{"username"=>"BigAnge", "firstname"=>"Angela", "lastname"=>"Maugey", "email"=>"ange@email.com", "admin"=>false, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+Unpermitted parameters: :firstname, :lastname, :admin, :authentication
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.2ms)[0m  [1m[32mINSERT INTO "users" ("username", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["username", "BigAnge"], ["created_at", "2017-07-22 13:46:41.525535"], ["updated_at", "2017-07-22 13:46:41.525535"], ["email", "ange@email.com"], ["password_digest", "$2a$10$Y0/vAkULUD9/CSTi2GFPK.bOcbuMuUXCYdLq9E4b99KxSM7rtehP2"]]
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mPost Load (1.9ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 5]]
+[active_model_serializers]   [1m[36mComment Load (0.7ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 5]]
+[active_model_serializers]   [1m[36mNotification Load (2.5ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 5]]
+[active_model_serializers]   [1m[36mTopic Load (1.5ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 5]]
+[active_model_serializers] Rendered UserSerializer with ActiveModelSerializers::Adapter::Attributes (20.85ms)
+Completed 200 OK in 122ms (Views: 15.0ms | ActiveRecord: 22.9ms)
+
+
+Started POST "/api/register" for 127.0.0.1 at 2017-07-22 14:47:51 +0100
+Processing by AuthenticationsController#register as */*
+  Parameters: {"username"=>"BigAnge", "firstname"=>"Angela", "lastname"=>"Maugey", "email"=>"ange@email.com", "admin"=>false, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication"=>{"username"=>"BigAnge", "firstname"=>"Angela", "lastname"=>"Maugey", "email"=>"ange@email.com", "admin"=>false, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+Unpermitted parameters: :admin, :authentication
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "BigAnge"], ["firstname", "Angela"], ["lastname", "Maugey"], ["created_at", "2017-07-22 13:48:01.376541"], ["updated_at", "2017-07-22 13:48:01.376541"], ["email", "ange@email.com"], ["password_digest", "$2a$10$84rq91.BjTBWmfejaQJg8.qx7s5lHWKONQKs3umHOJtA0iJNy1Ie6"]]
+  [1m[35m (1.3ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mPost Load (0.4ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 6]]
+[active_model_serializers]   [1m[36mComment Load (0.8ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 6]]
+[active_model_serializers]   [1m[36mNotification Load (0.6ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 6]]
+[active_model_serializers]   [1m[36mTopic Load (0.5ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 6]]
+[active_model_serializers] Rendered UserSerializer with ActiveModelSerializers::Adapter::Attributes (58.17ms)
+Completed 200 OK in 170ms (Views: 59.6ms | ActiveRecord: 4.7ms)
+
+
+  [1m[35m (61.4ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1347200930821886805);[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ChangeDefaultToAdminInUsers (20170722135226)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.9ms)[0m  [1m[35mALTER TABLE "users" ALTER COLUMN "admin" TYPE boolean[0m
+  [1m[35m (41.7ms)[0m  [1m[35mALTER TABLE "users" ALTER COLUMN "admin" SET DEFAULT 'f'[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170722135226"]]
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(1347200930821886805)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started POST "/api/register" for 127.0.0.1 at 2017-07-22 14:53:53 +0100
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AuthenticationsController#register as */*
+  Parameters: {"username"=>"JackyBigNuts", "firstname"=>"Jack", "lastname"=>"May", "email"=>"jack@email.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication"=>{"username"=>"JackyBigNuts", "firstname"=>"Jack", "lastname"=>"May", "email"=>"jack@email.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+Unpermitted parameter: :authentication
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "JackyBigNuts"], ["firstname", "Jack"], ["lastname", "May"], ["created_at", "2017-07-22 13:53:54.274725"], ["updated_at", "2017-07-22 13:53:54.274725"], ["email", "jack@email.com"], ["password_digest", "$2a$10$gew/9DSE.0DZyQG0lxCOn.3ITcXudxQRiIqD9ZvpROJAAGzyLvymq"]]
+  [1m[35m (1.6ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mPost Load (0.8ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 7]]
+[active_model_serializers]   [1m[36mComment Load (1.3ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 7]]
+[active_model_serializers]   [1m[36mNotification Load (0.5ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 7]]
+[active_model_serializers]   [1m[36mTopic Load (1.0ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 7]]
+[active_model_serializers] Rendered UserSerializer with ActiveModelSerializers::Adapter::Attributes (139.46ms)
+Completed 200 OK in 318ms (Views: 141.9ms | ActiveRecord: 40.0ms)
+
+
+Started POST "/api/register" for 127.0.0.1 at 2017-07-22 14:54:50 +0100
+Processing by AuthenticationsController#register as */*
+  Parameters: {"username"=>"CommunistTurtle", "firstname"=>"Mike", "lastname"=>"de Groot", "email"=>"mike@email.com", "admin"=>true, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication"=>{"username"=>"CommunistTurtle", "firstname"=>"Mike", "lastname"=>"de Groot", "email"=>"mike@email.com", "admin"=>true, "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+Unpermitted parameters: :admin, :authentication
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "CommunistTurtle"], ["firstname", "Mike"], ["lastname", "de Groot"], ["created_at", "2017-07-22 13:54:50.613401"], ["updated_at", "2017-07-22 13:54:50.613401"], ["email", "mike@email.com"], ["password_digest", "$2a$10$//5YTJ3sGZ2HsuGWApFrXeDswwfqRO5UDhCqa5duiofrUS6R2KGVO"]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mPost Load (3.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers]   [1m[36mComment Load (0.6ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers]   [1m[36mNotification Load (1.0ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 8]]
+[active_model_serializers]   [1m[36mTopic Load (1.6ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers] Rendered UserSerializer with ActiveModelSerializers::Adapter::Attributes (25.29ms)
+Completed 200 OK in 132ms (Views: 19.3ms | ActiveRecord: 23.8ms)
+
+
+Started PUT "/api/users/8" for 127.0.0.1 at 2017-07-22 14:56:28 +0100
+Error occurred while parsing request parameters.
+Contents:
+
+{
+
+	"admin": true,
+	
+}
+  
+ActionDispatch::Http::Parameters::ParseError (822: unexpected token at '{
+
+	"admin": true,
+	
+}'):
+  
+actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:113:in `rescue in parse_formatted_parameters'
+actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:107:in `parse_formatted_parameters'
+actionpack (5.1.2) lib/action_dispatch/http/request.rb:358:in `block in POST'
+rack (2.0.3) lib/rack/request.rb:57:in `fetch'
+rack (2.0.3) lib/rack/request.rb:57:in `fetch_header'
+actionpack (5.1.2) lib/action_dispatch/http/request.rb:357:in `POST'
+actionpack (5.1.2) lib/action_controller/metal/params_wrapper.rb:286:in `_wrapper_enabled?'
+actionpack (5.1.2) lib/action_controller/metal/params_wrapper.rb:235:in `process_action'
+activerecord (5.1.2) lib/active_record/railties/controller_runtime.rb:22:in `process_action'
+actionpack (5.1.2) lib/abstract_controller/base.rb:124:in `process'
+actionpack (5.1.2) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.2) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:38:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+activerecord (5.1.2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.0) lib/rack/cors.rb:93:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.9.1) lib/puma/configuration.rb:224:in `call'
+puma (3.9.1) lib/puma/server.rb:602:in `handle_request'
+puma (3.9.1) lib/puma/server.rb:435:in `process_client'
+puma (3.9.1) lib/puma/server.rb:299:in `block in run'
+puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started PUT "/api/users/8" for 127.0.0.1 at 2017-07-22 14:56:36 +0100
+Processing by UsersController#update as */*
+  Parameters: {"admin"=>true, "id"=>"8", "user"=>{"admin"=>true}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+Unpermitted parameters: :id, :user
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (42.1ms)[0m  [1m[33mUPDATE "users" SET "admin" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["admin", "t"], ["updated_at", "2017-07-22 13:56:36.368442"], ["id", 8]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mPost Load (0.5ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers]   [1m[36mComment Load (0.6ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers]   [1m[36mNotification Load (0.9ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 8]]
+[active_model_serializers]   [1m[36mTopic Load (0.8ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers] Rendered UserSerializer with ActiveModelSerializers::Adapter::Attributes (14.39ms)
+Completed 200 OK in 67ms (Views: 12.2ms | ActiveRecord: 46.6ms)
+
+
+Started POST "/api/login" for 127.0.0.1 at 2017-07-22 14:59:04 +0100
+Processing by AuthenticationsController#login as */*
+  Parameters: {"email"=>"jack@email.com", "password"=>"[FILTERED]", "authentication"=>{"email"=>"jack@email.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "jack@email.com"], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mPost Load (0.9ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 7]]
+[active_model_serializers]   [1m[36mComment Load (0.5ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 7]]
+[active_model_serializers]   [1m[36mNotification Load (1.5ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 7]]
+[active_model_serializers]   [1m[36mTopic Load (0.5ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 7]]
+[active_model_serializers] Rendered UserSerializer with ActiveModelSerializers::Adapter::Attributes (16.03ms)
+Completed 200 OK in 106ms (Views: 13.4ms | ActiveRecord: 4.9ms)
+
+
+Started POST "/api/login" for 127.0.0.1 at 2017-07-22 15:06:04 +0100
+Processing by AuthenticationsController#login as */*
+  Parameters: {"email"=>"jack@email.com", "password"=>"[FILTERED]", "authentication"=>{"email"=>"jack@email.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "jack@email.com"], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 214ms (ActiveRecord: 0.5ms)
+
+
+  
+NameError (undefined local variable or method `auth' for #<AuthenticationsController:0x007f8cd5944ff8>):
+  
+app/controllers/authentications_controller.rb:6:in `login'
+Started POST "/api/login" for 127.0.0.1 at 2017-07-22 15:06:42 +0100
+Processing by AuthenticationsController#login as */*
+  Parameters: {"email"=>"angek@email.com", "password"=>"[FILTERED]", "authentication"=>{"email"=>"angek@email.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "angek@email.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.22ms)
+Completed 401 Unauthorized in 45ms (Views: 43.1ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/api/login" for 127.0.0.1 at 2017-07-22 15:06:52 +0100
+Processing by AuthenticationsController#login as */*
+  Parameters: {"email"=>"ange@email.com", "password"=>"[FILTERED]", "authentication"=>{"email"=>"ange@email.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "ange@email.com"], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 239ms (ActiveRecord: 0.4ms)
+
+
+  
+NameError (undefined local variable or method `auth' for #<AuthenticationsController:0x007f8cd6526a10>):
+  
+app/controllers/authentications_controller.rb:6:in `login'
+Started POST "/api/login" for 127.0.0.1 at 2017-07-22 15:07:58 +0100
+Processing by AuthenticationsController#login as */*
+  Parameters: {"email"=>"ange@email.com", "password"=>"[FILTERED]", "authentication"=>{"email"=>"ange@email.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "ange@email.com"], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mPost Load (1.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 5]]
+[active_model_serializers]   [1m[36mComment Load (0.5ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 5]]
+[active_model_serializers]   [1m[36mNotification Load (1.9ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 5]]
+[active_model_serializers]   [1m[36mTopic Load (1.8ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 5]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (83.94ms)
+Completed 500 Internal Server Error in 227ms (Views: 81.2ms | ActiveRecord: 5.8ms)
+
+
+  
+AbstractController::DoubleRenderError (Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...) and return".):
+  
+app/controllers/authentications_controller.rb:9:in `login'
+Started POST "/api/login" for 127.0.0.1 at 2017-07-22 15:08:09 +0100
+Processing by AuthenticationsController#login as */*
+  Parameters: {"email"=>"mike@email.com", "password"=>"[FILTERED]", "authentication"=>{"email"=>"mike@email.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "mike@email.com"], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mPost Load (0.5ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers]   [1m[36mComment Load (4.3ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers]   [1m[36mNotification Load (2.6ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 8]]
+[active_model_serializers]   [1m[36mTopic Load (1.1ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (29.54ms)
+Completed 500 Internal Server Error in 108ms (Views: 22.2ms | ActiveRecord: 9.0ms)
+
+
+  
+AbstractController::DoubleRenderError (Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...) and return".):
+  
+app/controllers/authentications_controller.rb:9:in `login'
+Started POST "/api/login" for 127.0.0.1 at 2017-07-22 15:08:43 +0100
+Processing by AuthenticationsController#login as */*
+  Parameters: {"email"=>"mike@email.com", "password"=>"[FILTERED]", "authentication"=>{"email"=>"mike@email.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "mike@email.com"], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mPost Load (0.5ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers]   [1m[36mComment Load (0.5ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers]   [1m[36mNotification Load (2.1ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 8]]
+[active_model_serializers]   [1m[36mTopic Load (1.0ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (85.58ms)
+Completed 200 OK in 233ms (Views: 67.4ms | ActiveRecord: 34.2ms)
+
+
+Started GET "/api/users" for 127.0.0.1 at 2017-07-22 15:09:51 +0100
+Processing by UsersController#index as */*
+  Parameters: {"email"=>"mike@email.com", "password"=>"[FILTERED]", "user"=>{"email"=>"mike@email.com"}}
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.09ms)
+Filter chain halted as :authenticate_user! rendered or redirected
+Completed 401 Unauthorized in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/users" for 127.0.0.1 at 2017-07-22 15:10:24 +0100
+Processing by UsersController#index as */*
+  Parameters: {"email"=>"mike@email.com", "password"=>"[FILTERED]", "user"=>{"email"=>"mike@email.com"}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+[active_model_serializers]   [1m[36mPost Load (0.6ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 1]]
+[active_model_serializers]   [1m[36mComment Load (0.5ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 1]]
+[active_model_serializers]   [1m[36mNotification Load (0.4ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 1]]
+[active_model_serializers]   [1m[36mTopic Load (1.0ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 1]]
+[active_model_serializers]   [1m[36mPost Load (1.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 2]]
+[active_model_serializers]   [1m[36mComment Load (1.1ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 2]]
+[active_model_serializers]   [1m[36mNotification Load (0.3ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 2]]
+[active_model_serializers]   [1m[36mTopic Load (0.6ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 2]]
+[active_model_serializers]   [1m[36mPost Load (0.7ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 3]]
+[active_model_serializers]   [1m[36mComment Load (0.9ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 3]]
+[active_model_serializers]   [1m[36mNotification Load (0.3ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 3]]
+[active_model_serializers]   [1m[36mTopic Load (0.4ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 3]]
+[active_model_serializers]   [1m[36mPost Load (0.3ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 4]]
+[active_model_serializers]   [1m[36mComment Load (0.4ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 4]]
+[active_model_serializers]   [1m[36mNotification Load (0.3ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 4]]
+[active_model_serializers]   [1m[36mTopic Load (0.3ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 4]]
+[active_model_serializers]   [1m[36mPost Load (0.3ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 5]]
+[active_model_serializers]   [1m[36mComment Load (0.3ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 5]]
+[active_model_serializers]   [1m[36mNotification Load (0.7ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 5]]
+[active_model_serializers]   [1m[36mTopic Load (1.0ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 5]]
+[active_model_serializers]   [1m[36mPost Load (0.3ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 6]]
+[active_model_serializers]   [1m[36mComment Load (0.3ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 6]]
+[active_model_serializers]   [1m[36mNotification Load (0.4ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 6]]
+[active_model_serializers]   [1m[36mTopic Load (0.7ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 6]]
+[active_model_serializers]   [1m[36mPost Load (0.4ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 7]]
+[active_model_serializers]   [1m[36mComment Load (0.3ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 7]]
+[active_model_serializers]   [1m[36mNotification Load (0.3ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 7]]
+[active_model_serializers]   [1m[36mTopic Load (0.4ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 7]]
+[active_model_serializers]   [1m[36mPost Load (0.3ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers]   [1m[36mComment Load (0.5ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers]   [1m[36mNotification Load (0.3ms)[0m  [1m[34mSELECT "notifications".* FROM "notifications" WHERE "notifications"."receiver_id" = $1[0m  [["receiver_id", 8]]
+[active_model_serializers]   [1m[36mTopic Load (0.4ms)[0m  [1m[34mSELECT "topics".* FROM "topics" INNER JOIN "topics_users" ON "topics"."id" = "topics_users"."topic_id" WHERE "topics_users"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (184.3ms)
+Completed 200 OK in 191ms (Views: 168.3ms | ActiveRecord: 18.9ms)
+
+
