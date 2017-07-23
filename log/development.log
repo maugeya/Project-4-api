@@ -286,7 +286,7 @@ Contents:
 
 	{
 	{
-			
+
 			"id": 1,
 		"body": "I bet we could stick angular ontop of this API...",
 		"user": {
@@ -296,14 +296,14 @@ Contents:
 			"last_name": "Chin"
 		}
 	},
-			
-			
-			
-		} 
-  
+
+
+
+		}
+
 ActionDispatch::Http::Parameters::ParseError (822: unexpected token at '{
 	{
-			
+
 			"id": 1,
 		"body": "I bet we could stick angular ontop of this API...",
 		"user": {
@@ -313,11 +313,11 @@ ActionDispatch::Http::Parameters::ParseError (822: unexpected token at '{
 			"last_name": "Chin"
 		}
 	},
-			
-			
-			
+
+
+
 		} '):
-  
+
 actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:113:in `rescue in parse_formatted_parameters'
 actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:107:in `parse_formatted_parameters'
 actionpack (5.1.2) lib/action_dispatch/http/request.rb:358:in `block in POST'
@@ -367,9 +367,9 @@ puma (3.9.1) lib/puma/server.rb:435:in `process_client'
 puma (3.9.1) lib/puma/server.rb:299:in `block in run'
 puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
 Started GET "/users" for 127.0.0.1 at 2017-07-21 16:18:27 +0100
-  
+
 ActionController::RoutingError (No route matches [GET] "/users"):
-  
+
 actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
 actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
 railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
@@ -396,9 +396,9 @@ Error occurred while parsing request parameters.
 Contents:
 
 
-			
-			
-		} 
+
+
+		}
 Started GET "/api/users" for 127.0.0.1 at 2017-07-21 16:19:30 +0100
 Processing by UsersController#index as */*
   Parameters: {"user"=>{}}
@@ -429,12 +429,12 @@ Processing by UsersController#index as */*
 Completed 500 Internal Server Error in 94ms (ActiveRecord: 15.2ms)
 
 
-  
+
 ActiveRecord::StatementInvalid (PG::UndefinedColumn: ERROR:  column notifications.user_id does not exist
 LINE 1: ...LECT "notifications".* FROM "notifications" WHERE "notificat...
                                                              ^
 : SELECT "notifications".* FROM "notifications" WHERE "notifications"."user_id" = $1):
-  
+
 app/controllers/users_controller.rb:8:in `index'
 Started GET "/api/users" for 127.0.0.1 at 2017-07-21 16:20:04 +0100
 Processing by UsersController#index as */*
@@ -446,12 +446,12 @@ Processing by UsersController#index as */*
 Completed 500 Internal Server Error in 26ms (ActiveRecord: 9.9ms)
 
 
-  
+
 ActiveRecord::StatementInvalid (PG::UndefinedColumn: ERROR:  column notifications.user_id does not exist
 LINE 1: ...LECT "notifications".* FROM "notifications" WHERE "notificat...
                                                              ^
 : SELECT "notifications".* FROM "notifications" WHERE "notifications"."user_id" = $1):
-  
+
 app/controllers/users_controller.rb:8:in `index'
 Started GET "/api/users" for 127.0.0.1 at 2017-07-21 16:20:05 +0100
 Processing by UsersController#index as */*
@@ -463,12 +463,12 @@ Processing by UsersController#index as */*
 Completed 500 Internal Server Error in 7ms (ActiveRecord: 1.1ms)
 
 
-  
+
 ActiveRecord::StatementInvalid (PG::UndefinedColumn: ERROR:  column notifications.user_id does not exist
 LINE 1: ...LECT "notifications".* FROM "notifications" WHERE "notificat...
                                                              ^
 : SELECT "notifications".* FROM "notifications" WHERE "notifications"."user_id" = $1):
-  
+
 app/controllers/users_controller.rb:8:in `index'
 Started GET "/api/users" for 127.0.0.1 at 2017-07-21 16:20:06 +0100
 Processing by UsersController#index as */*
@@ -480,12 +480,12 @@ Processing by UsersController#index as */*
 Completed 500 Internal Server Error in 9ms (ActiveRecord: 1.2ms)
 
 
-  
+
 ActiveRecord::StatementInvalid (PG::UndefinedColumn: ERROR:  column notifications.user_id does not exist
 LINE 1: ...LECT "notifications".* FROM "notifications" WHERE "notificat...
                                                              ^
 : SELECT "notifications".* FROM "notifications" WHERE "notifications"."user_id" = $1):
-  
+
 app/controllers/users_controller.rb:8:in `index'
 Started GET "/api/users" for 127.0.0.1 at 2017-07-21 16:22:38 +0100
   [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
@@ -503,10 +503,10 @@ Completed 200 OK in 83ms (Views: 72.4ms | ActiveRecord: 13.4ms)
 
 
 Started GET "/api/users" for 127.0.0.1 at 2017-07-22 11:54:15 +0100
-  
+
 ActiveRecord::NoDatabaseError (FATAL:  database "final_project_api_development" does not exist
 ):
-  
+
 activerecord (5.1.2) lib/active_record/connection_adapters/postgresql_adapter.rb:705:in `rescue in connect'
 activerecord (5.1.2) lib/active_record/connection_adapters/postgresql_adapter.rb:701:in `connect'
 activerecord (5.1.2) lib/active_record/connection_adapters/postgresql_adapter.rb:220:in `initialize'
@@ -643,9 +643,9 @@ Completed 200 OK in 302ms (Views: 252.2ms | ActiveRecord: 30.1ms)
 
 
 Started GET "/api/posts/comments" for 127.0.0.1 at 2017-07-22 11:55:07 +0100
-  
+
 ActionController::RoutingError (No route matches [GET] "/api/posts/comments"):
-  
+
 actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
 actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
 railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
@@ -669,9 +669,9 @@ puma (3.9.1) lib/puma/server.rb:435:in `process_client'
 puma (3.9.1) lib/puma/server.rb:299:in `block in run'
 puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
 Started GET "/api/posts" for 127.0.0.1 at 2017-07-22 11:55:11 +0100
-  
+
 ActionController::RoutingError (No route matches [GET] "/api/posts"):
-  
+
 actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
 actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
 railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
@@ -695,9 +695,9 @@ puma (3.9.1) lib/puma/server.rb:435:in `process_client'
 puma (3.9.1) lib/puma/server.rb:299:in `block in run'
 puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
 Started GET "/api/posts" for 127.0.0.1 at 2017-07-22 11:56:17 +0100
-  
+
 ActionController::RoutingError (No route matches [GET] "/api/posts"):
-  
+
 actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
 actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
 railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
@@ -722,9 +722,9 @@ puma (3.9.1) lib/puma/server.rb:299:in `block in run'
 puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
 Started GET "/api/posts" for 127.0.0.1 at 2017-07-22 11:59:39 +0100
   [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-  
+
 ActionController::RoutingError (No route matches [GET] "/api/posts"):
-  
+
 actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
 actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
 railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
@@ -761,10 +761,10 @@ Processing by PostsController#create as */*
 Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.0ms)
 
 
-  
+
 NoMethodError (undefined method `permit' for #<String:0x007fbaa00e0378>
 Did you mean?  print):
-  
+
 app/controllers/posts_controller.rb:49:in `post_params'
 app/controllers/posts_controller.rb:18:in `create'
 Started POST "/api/posts" for 127.0.0.1 at 2017-07-22 12:03:46 +0100
@@ -773,10 +773,10 @@ Processing by PostsController#create as */*
 Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.0ms)
 
 
-  
+
 NoMethodError (undefined method `permit' for #<String:0x007fbaa3c4da78>
 Did you mean?  print):
-  
+
 app/controllers/posts_controller.rb:49:in `post_params'
 app/controllers/posts_controller.rb:18:in `create'
 Started POST "/api/posts" for 127.0.0.1 at 2017-07-22 12:06:52 +0100
@@ -787,16 +787,16 @@ Contents:
 	"title": "TESTING",
 	"image": "http://1.bp.blogspot.com/-2nZ2rxKjHzs/Umr2HcIhJoI/AAAAAAAAJXE/74Amu3_CPWM/s1600/Mr+Blobby.png",
 	"post": "this is a test post to see what information comes back from Insomnia...",
-	"user_id": users[1]	
+	"user_id": users[1]
 }
-  
+
 ActionDispatch::Http::Parameters::ParseError (822: unexpected token at '{
 	"title": "TESTING",
 	"image": "http://1.bp.blogspot.com/-2nZ2rxKjHzs/Umr2HcIhJoI/AAAAAAAAJXE/74Amu3_CPWM/s1600/Mr+Blobby.png",
 	"post": "this is a test post to see what information comes back from Insomnia...",
-	"user_id": users[1]	
+	"user_id": users[1]
 }'):
-  
+
 actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:113:in `rescue in parse_formatted_parameters'
 actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:107:in `parse_formatted_parameters'
 actionpack (5.1.2) lib/action_dispatch/http/request.rb:358:in `block in POST'
@@ -851,10 +851,10 @@ Processing by PostsController#create as */*
 Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.0ms)
 
 
-  
+
 NoMethodError (undefined method `permit' for #<String:0x007fbaa00f20c8>
 Did you mean?  print):
-  
+
 app/controllers/posts_controller.rb:49:in `post_params'
 app/controllers/posts_controller.rb:18:in `create'
 Started POST "/api/posts" for 127.0.0.1 at 2017-07-22 12:07:35 +0100
@@ -863,10 +863,10 @@ Processing by PostsController#create as */*
 Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.0ms)
 
 
-  
+
 NoMethodError (undefined method `permit' for #<String:0x007fbaa00bbd48>
 Did you mean?  print):
-  
+
 app/controllers/posts_controller.rb:49:in `post_params'
 app/controllers/posts_controller.rb:18:in `create'
 Started POST "/api/posts" for 127.0.0.1 at 2017-07-22 12:15:55 +0100
@@ -875,10 +875,10 @@ Processing by PostsController#create as */*
 Completed 500 Internal Server Error in 7ms (ActiveRecord: 0.0ms)
 
 
-  
+
 NoMethodError (undefined method `permit' for #<String:0x007fbaa0098a50>
 Did you mean?  print):
-  
+
 app/controllers/posts_controller.rb:49:in `post_params'
 app/controllers/posts_controller.rb:18:in `create'
 Started POST "/api/posts" for 127.0.0.1 at 2017-07-22 12:17:21 +0100
@@ -900,9 +900,9 @@ Processing by PostsController#create as */*
 Completed 500 Internal Server Error in 360ms (ActiveRecord: 186.1ms)
 
 
-  
+
 NoMethodError (undefined method `has_and_belongs_to_many' for PostSerializer:Class):
-  
+
 app/serializers/post_serializer.rb:4:in `<class:PostSerializer>'
 app/serializers/post_serializer.rb:1:in `<top (required)>'
 app/controllers/posts_controller.rb:21:in `create'
@@ -924,9 +924,9 @@ Processing by UsersController#index as */*
 Completed 500 Internal Server Error in 59ms (ActiveRecord: 0.9ms)
 
 
-  
+
 NoMethodError (undefined method `has_and_belongs_to_many' for PostSerializer:Class):
-  
+
 app/serializers/post_serializer.rb:4:in `<class:PostSerializer>'
 app/serializers/post_serializer.rb:1:in `<top (required)>'
 app/controllers/users_controller.rb:8:in `index'
@@ -970,9 +970,9 @@ Processing by PostsController#show as */*
 Completed 404 Not Found in 26ms (ActiveRecord: 12.4ms)
 
 
-  
+
 ActiveRecord::RecordNotFound (Couldn't find Post with 'id'=comments):
-  
+
 app/controllers/posts_controller.rb:44:in `set_post'
 Started GET "/api/comments" for 127.0.0.1 at 2017-07-22 12:33:36 +0100
 Processing by CommentsController#index as */*
@@ -1027,9 +1027,9 @@ Completed 422 Unprocessable Entity in 4ms (Views: 0.8ms | ActiveRecord: 0.4ms)
 
 
 Started GET "/posts" for 127.0.0.1 at 2017-07-22 12:39:40 +0100
-  
+
 ActionController::RoutingError (No route matches [GET] "/posts"):
-  
+
 actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
 actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
 railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
@@ -1054,9 +1054,9 @@ puma (3.9.1) lib/puma/server.rb:299:in `block in run'
 puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
 Started GET "/posts" for 127.0.0.1 at 2017-07-22 12:40:20 +0100
   [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-  
+
 ActionController::RoutingError (No route matches [GET] "/posts"):
-  
+
 actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
 actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
 railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
@@ -1198,13 +1198,13 @@ Contents:
 	"post": 1,
 
 }
-  
+
 ActionDispatch::Http::Parameters::ParseError (822: unexpected token at '{
 	"body": "testing to see if the commenting is working",
 	"post": 1,
 
 }'):
-  
+
 actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:113:in `rescue in parse_formatted_parameters'
 actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:107:in `parse_formatted_parameters'
 actionpack (5.1.2) lib/action_dispatch/http/request.rb:358:in `block in POST'
@@ -1370,12 +1370,12 @@ Processing by UsersController#show as */*
 Completed 500 Internal Server Error in 135ms (ActiveRecord: 26.9ms)
 
 
-  
+
 ActiveRecord::StatementInvalid (PG::UndefinedColumn: ERROR:  column notifications.user_id does not exist
 LINE 1: ...LECT "notifications".* FROM "notifications" WHERE "notificat...
                                                              ^
 : SELECT "notifications".* FROM "notifications" WHERE "notifications"."user_id" = $1):
-  
+
 app/controllers/users_controller.rb:13:in `show'
 Started GET "/api/users/2" for 127.0.0.1 at 2017-07-22 13:10:36 +0100
 Processing by UsersController#show as */*
@@ -1628,9 +1628,9 @@ Processing by TopicsController#index as */*
 Completed 500 Internal Server Error in 68ms (ActiveRecord: 47.9ms)
 
 
-  
+
 NoMethodError (undefined method `has_and_belongs_to_many' for TopicSerializer:Class):
-  
+
 app/serializers/topic_serializer.rb:3:in `<class:TopicSerializer>'
 app/serializers/topic_serializer.rb:1:in `<top (required)>'
 app/controllers/topics_controller.rb:8:in `index'
@@ -1646,9 +1646,9 @@ Completed 200 OK in 15ms (Views: 7.6ms | ActiveRecord: 2.8ms)
 
 
 Started POST "/api/users/1" for 127.0.0.1 at 2017-07-22 13:58:30 +0100
-  
+
 ActionController::RoutingError (No route matches [POST] "/api/users/1"):
-  
+
 actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
 actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
 railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
@@ -1683,9 +1683,9 @@ Completed 200 OK in 49ms (Views: 34.7ms | ActiveRecord: 2.2ms)
 
 
 Started POST "/api/users/1" for 127.0.0.1 at 2017-07-22 14:02:56 +0100
-  
+
 ActionController::RoutingError (No route matches [POST] "/api/users/1"):
-  
+
 actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
 actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
 railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
@@ -1715,9 +1715,9 @@ Processing by UsersController#update as */*
 Completed 400 Bad Request in 12ms (ActiveRecord: 0.5ms)
 
 
-  
+
 ActionController::ParameterMissing (param is missing or the value is empty: user):
-  
+
 app/controllers/users_controller.rb:49:in `user_params'
 app/controllers/users_controller.rb:29:in `update'
 Started PUT "/api/users/1" for 127.0.0.1 at 2017-07-22 14:05:18 +0100
@@ -1730,9 +1730,9 @@ Unpermitted parameters: :topic_id, :id, :user
 Completed 500 Internal Server Error in 59ms (ActiveRecord: 4.8ms)
 
 
-  
+
 NoMethodError (undefined method `has_and_belongs_to_many' for UserSerializer:Class):
-  
+
 app/serializers/user_serializer.rb:6:in `<class:UserSerializer>'
 app/serializers/user_serializer.rb:1:in `<top (required)>'
 app/controllers/users_controller.rb:30:in `update'
@@ -1750,9 +1750,9 @@ Unpermitted parameters: :topic_id, :id, :user
 Completed 500 Internal Server Error in 79ms (ActiveRecord: 2.7ms)
 
 
-  
+
 NoMethodError (undefined method `topics' for #<User:0x007f951d9760d0>):
-  
+
 app/controllers/users_controller.rb:30:in `update'
 Started PUT "/api/users/1" for 127.0.0.1 at 2017-07-22 14:07:51 +0100
 Processing by UsersController#update as */*
@@ -1764,9 +1764,9 @@ Unpermitted parameters: :id, :user
 Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.8ms)
 
 
-  
+
 ActiveModel::UnknownAttributeError (unknown attribute 'topic_ids' for User.):
-  
+
 app/controllers/users_controller.rb:29:in `update'
 Started PUT "/api/users/1" for 127.0.0.1 at 2017-07-22 14:08:26 +0100
 Processing by UsersController#update as */*
@@ -1977,15 +1977,15 @@ Contents:
 {
 
 	"admin": true,
-	
+
 }
-  
+
 ActionDispatch::Http::Parameters::ParseError (822: unexpected token at '{
 
 	"admin": true,
-	
+
 }'):
-  
+
 actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:113:in `rescue in parse_formatted_parameters'
 actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:107:in `parse_formatted_parameters'
 actionpack (5.1.2) lib/action_dispatch/http/request.rb:358:in `block in POST'
@@ -2069,9 +2069,9 @@ Processing by AuthenticationsController#login as */*
 Completed 500 Internal Server Error in 214ms (ActiveRecord: 0.5ms)
 
 
-  
+
 NameError (undefined local variable or method `auth' for #<AuthenticationsController:0x007f8cd5944ff8>):
-  
+
 app/controllers/authentications_controller.rb:6:in `login'
 Started POST "/api/login" for 127.0.0.1 at 2017-07-22 15:06:42 +0100
 Processing by AuthenticationsController#login as */*
@@ -2088,9 +2088,9 @@ Processing by AuthenticationsController#login as */*
 Completed 500 Internal Server Error in 239ms (ActiveRecord: 0.4ms)
 
 
-  
+
 NameError (undefined local variable or method `auth' for #<AuthenticationsController:0x007f8cd6526a10>):
-  
+
 app/controllers/authentications_controller.rb:6:in `login'
 Started POST "/api/login" for 127.0.0.1 at 2017-07-22 15:07:58 +0100
 Processing by AuthenticationsController#login as */*
@@ -2104,9 +2104,9 @@ Processing by AuthenticationsController#login as */*
 Completed 500 Internal Server Error in 227ms (Views: 81.2ms | ActiveRecord: 5.8ms)
 
 
-  
+
 AbstractController::DoubleRenderError (Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...) and return".):
-  
+
 app/controllers/authentications_controller.rb:9:in `login'
 Started POST "/api/login" for 127.0.0.1 at 2017-07-22 15:08:09 +0100
 Processing by AuthenticationsController#login as */*
@@ -2120,9 +2120,9 @@ Processing by AuthenticationsController#login as */*
 Completed 500 Internal Server Error in 108ms (Views: 22.2ms | ActiveRecord: 9.0ms)
 
 
-  
+
 AbstractController::DoubleRenderError (Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...) and return".):
-  
+
 app/controllers/authentications_controller.rb:9:in `login'
 Started POST "/api/login" for 127.0.0.1 at 2017-07-22 15:08:43 +0100
 Processing by AuthenticationsController#login as */*
@@ -2245,16 +2245,16 @@ Contents:
 "email": "ange@email.co",
 "password": "password",
 
-	
+
 }
-  
+
 ActionDispatch::Http::Parameters::ParseError (822: unexpected token at '{
 "email": "ange@email.co",
 "password": "password",
 
-	
+
 }'):
-  
+
 actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:113:in `rescue in parse_formatted_parameters'
 actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:107:in `parse_formatted_parameters'
 actionpack (5.1.2) lib/action_dispatch/http/request.rb:358:in `block in POST'
@@ -2312,16 +2312,16 @@ Contents:
 "email": "ange@email.co",
 "password": "password",
 
-	
+
 }
-  
+
 ActionDispatch::Http::Parameters::ParseError (822: unexpected token at '{
 "email": "ange@email.co",
 "password": "password",
 
-	
+
 }'):
-  
+
 actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:113:in `rescue in parse_formatted_parameters'
 actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:107:in `parse_formatted_parameters'
 actionpack (5.1.2) lib/action_dispatch/http/request.rb:358:in `block in POST'
@@ -2378,16 +2378,16 @@ Contents:
 "email": "ange@email.co",
 "password": "password",
 
-	
+
 }
-  
+
 ActionDispatch::Http::Parameters::ParseError (822: unexpected token at '{
 "email": "ange@email.co",
 "password": "password",
 
-	
+
 }'):
-  
+
 actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:113:in `rescue in parse_formatted_parameters'
 actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:107:in `parse_formatted_parameters'
 actionpack (5.1.2) lib/action_dispatch/http/request.rb:358:in `block in POST'
@@ -2459,16 +2459,16 @@ Contents:
 "email": "ange@email.co",
 "password": "password",
 
-	
+
 }
-  
+
 ActionDispatch::Http::Parameters::ParseError (822: unexpected token at '{
 "email": "ange@email.co",
 "password": "password",
 
-	
+
 }'):
-  
+
 actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:113:in `rescue in parse_formatted_parameters'
 actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:107:in `parse_formatted_parameters'
 actionpack (5.1.2) lib/action_dispatch/http/request.rb:358:in `block in POST'
@@ -4442,3 +4442,39 @@ FOREIGN KEY ("user_id")
   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
   [1m[35mSQL (1.4ms)[0m  [1m[32mINSERT INTO "posts" ("title", "body", "user_id", "created_at", "updated_at", "link_url") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Chalcots Estate evacuations"], ["body", "I have a close friend who has been evacuated from one of these blocks. The council have not been in touch with any formal documentation to why they were moved in the first place, and now they've been asked to move back with no proof that it is now safe. My friend is a single mother with two kids, she's been in a hotel room with them for the last 3 weeks just to be told that she would be charged as of Monday if she didn't move back in. If the blocks are so safe, why are there still Fire Marshals on each floor? Someone needs to give answers!"], ["user_id", 7], ["created_at", "2017-07-23 12:57:00.106436"], ["updated_at", "2017-07-23 12:57:00.106436"], ["link_url", "http://camdennewjournal.com/article/chalcots-home-lawyers"]]
   [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+
+  Started POST "/api/register" for 127.0.0.1 at 2017-07-22 15:43:30 +0100
+    [1m[35m (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  Processing by AuthenticationsController#register as */*
+    Parameters: {"username"=>"w", "email"=>"jason@email.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication"=>{"username"=>"w", "email"=>"jason@email.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+  Unpermitted parameter: :authentication
+    [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+    [1m[36mUser Exists (1.1ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "w"], ["LIMIT", 1]]
+    [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "jason@email.com"], ["LIMIT", 1]]
+    [1m[35m (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.31ms)
+  Completed 200 OK in 287ms (Views: 22.1ms | ActiveRecord: 11.8ms)
+
+
+  Started POST "/api/register" for 127.0.0.1 at 2017-07-22 15:43:49 +0100
+  Processing by AuthenticationsController#register as */*
+    Parameters: {"username"=>"dcijanev", "email"=>"jasonemail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication"=>{"username"=>"dcijanev", "email"=>"jasonemail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+  Unpermitted parameter: :authentication
+    [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+    [1m[36mUser Exists (6.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "dcijanev"], ["LIMIT", 1]]
+    [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "jasonemail.com"], ["LIMIT", 1]]
+    [1m[35m (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.1ms)
+  Completed 200 OK in 127ms (Views: 0.7ms | ActiveRecord: 19.8ms)
+
+
+  Started POST "/api/register" for 127.0.0.1 at 2017-07-22 15:43:59 +0100
+  Processing by AuthenticationsController#register as */*
+    Parameters: {"username"=>"dcijaerfjanefiueionvonwonwfawraerervaervaervnev", "email"=>"jason@email.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication"=>{"username"=>"dcijaerfjanefiueionvonwonwfawraerervaervaervnev", "email"=>"jason@email.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+  Unpermitted parameter: :authentication
+    [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+    [1m[36mUser Exists (1.7ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "dcijaerfjanefiueionvonwonwfawraerervaervaervnev"], ["LIMIT", 1]]
+    [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "jason@email.com"], ["LIMIT", 1]]
+    [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.08ms)
+  Completed 200 OK in 88ms (Views: 0.5ms | ActiveRecord: 2.8ms)
