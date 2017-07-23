@@ -3,5 +3,5 @@ class Comment < ApplicationRecord
   belongs_to :post
   has_many :notifications
 
-  validates :body, presence: true, length: { in: 2..140 }
+  validates :body, presence: true, length: { in: 2..240 }
 end
