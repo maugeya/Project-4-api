@@ -152,7 +152,7 @@ user = User.create!([
       title: "Protesting Commercialism at London Pride",
       body: "Many people in the LGBT+ community are against the commercialism of pride. Yes, money is needed to put on the event but why is it that smaller organisations such as social activist groups, should have to pay to be involved? A part of the community let their voices be heard pride weekend. We made our way to the front and refused to more unless our voices were heard!",
       link_url: "http://www.huffingtonpost.co.uk/entry/london-pride-dup_uk_59612661e4b0d5b458eacfd5",
-      image: "http://i.imgur.com/nYtXaWk.jpg",
+      remote_image_url: "http://i.imgur.com/nYtXaWk.jpg",
       user: user[5],
       topics: [topic[0]]
     },
@@ -167,7 +167,7 @@ user = User.create!([
       title: "Illegal Rainforest Destruction",
       body: "A few top global brands have been accused of using palm oil from the Sumatra's rainforest to produce loads of their products. This is pretty devastating, why are there never any repercussions for people doing this?",
       link_url: "https://www.theguardian.com/environment/2017/jul/21/pepsico-unilever-and-nestle-accused-of-complicity-in-illegal-rainforest-destruction",
-      image: "http://i.imgur.com/QX4BDut.jpg",
+      remote_image_url: "http://i.imgur.com/QX4BDut.jpg",
       user: user[0],
       topics: [topic[1], topic[4]]
     },
@@ -182,7 +182,7 @@ user = User.create!([
       title: "Social housing residents being moved out of London",
       body: "I know this has been happening for a while but it's still pretty shocking. People are being forced out of houses and areas they've lived in for generations. Families and support units are being torn apart.",
       link_url: "http://www.bbc.co.uk/news/uk-england-london-39386587",
-      image: "http://i.imgur.com/JI5qQbh.jpg",
+      remote_image_url: "http://i.imgur.com/JI5qQbh.jpg",
       user: user[0],
       topics: [topic[7],topic[2]]
     },
@@ -197,14 +197,14 @@ user = User.create!([
       title: "Oil Spillage Invention",
       body: "Been reading up on this new invention that is hopefully going to help the issue of cleaning up oil spillages.",
       link_url: "http://www.huffingtonpost.ca/2017/03/07/oil-spill-sponge_n_15218072.html",
-      image: "http://i.imgur.com/uzKl9zh.jpg",
+      remote_image_url: "http://i.imgur.com/uzKl9zh.jpg",
       user: user[0],
       topics: [topic[1], topic[4]]
     },
     {
       title: "People are kicking off about the new Doctor Who being a woman",
       body: "I mean, this is actually ridiculous. As if there aren't enough male role models in Sci-fi for men.",
-      image: "http://i.imgur.com/DcUJ6k3.jpg",
+      remote_image_url: "http://i.imgur.com/DcUJ6k3.jpg",
       link_url: "http://www.vulture.com/2017/07/a-former-doctor-who-doctor-isnt-pleased-with-female-casting.html",
       user: user[1],
       topics: [topic[5], topic[8]]
