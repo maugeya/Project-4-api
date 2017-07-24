@@ -6,7 +6,7 @@ class AuthenticationsController < ApplicationController
     if user && user.authenticate(params[:password])
       token = Auth.issue({ id: user.id})
       render json: { token: token, user: UserSerializer.new(user)}, status: :ok
-    
+
     else
       render json: { errors: ["You didnt say the magic word, or email, who knows?"] }, status: 401
     end
@@ -17,7 +17,7 @@ class AuthenticationsController < ApplicationController
       if user.save
         render json: user, status: :ok
       else
-        render json: { errors: user.errors.full_messages }, stats: :unprocessable_entity
+        render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
       end
   end
 
