@@ -6,5 +6,5 @@ class Post < ApplicationRecord
 
   validates :title, presence: true, length: { in: 2..80 }
   validates :body, presence: true, length: { in: 2..9000 }
-  validates :topics, presence: true
+  # validates :topics, presence: true
 end
