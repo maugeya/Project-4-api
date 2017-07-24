@@ -13057,3 +13057,407 @@ Migrating to AddLinkUrlToPosts (20170723121748)
   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
   [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "I've been to a panel talk that Reni did. She is an amazing speaker and it's a great book. I too learnt lots that I had no idea about. I know a few people who could benefit from reading this!"], ["user_id", 6], ["post_id", 16], ["created_at", "2017-07-23 22:07:23.470889"], ["updated_at", "2017-07-23 22:07:23.470889"]]
   [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (210.1ms)[0m  [1m[35mDROP DATABASE IF EXISTS "final_project_api_development"[0m
+  [1m[35m (188.9ms)[0m  [1m[35mDROP DATABASE IF EXISTS "final_project_api_test"[0m
+  [1m[35m (492.7ms)[0m  [1m[35mCREATE DATABASE "final_project_api_development" ENCODING = 'unicode'[0m
+  [1m[35m (406.6ms)[0m  [1m[35mCREATE DATABASE "final_project_api_test" ENCODING = 'unicode'[0m
+  [1m[35mSQL (2.9ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mDROP TABLE IF EXISTS "comments" CASCADE[0m
+  [1m[35m (14.2ms)[0m  [1m[35mCREATE TABLE "comments" ("id" bigserial primary key, "body" text, "user_id" bigint, "post_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE  INDEX  "index_comments_on_post_id" ON "comments"  ("post_id")[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE  INDEX  "index_comments_on_user_id" ON "comments"  ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "notifications" CASCADE[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "notifications" ("id" bigserial primary key, "read" boolean DEFAULT 'f', "comment_id" bigint, "receiver_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX  "index_notifications_on_comment_id" ON "notifications"  ("comment_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "posts" CASCADE[0m
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE TABLE "posts" ("id" bigserial primary key, "title" character varying, "image" character varying, "body" text, "user_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, "link_url" character varying)[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE  INDEX  "index_posts_on_user_id" ON "posts"  ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "posts_topics" CASCADE[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "posts_topics" ("topic_id" bigint NOT NULL, "post_id" bigint NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "topics" CASCADE[0m
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE TABLE "topics" ("id" bigserial primary key, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "topics_users" CASCADE[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "topics_users" ("topic_id" bigint NOT NULL, "user_id" bigint NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "username" character varying, "firstname" character varying, "lastname" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, "email" character varying, "admin" boolean DEFAULT 'f', "password_digest" character varying)[0m
+  [1m[35m (9.2ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_2fd19c0db7"
+FOREIGN KEY ("post_id")
+  REFERENCES "posts" ("id")
+[0m
+  [1m[35m (2.3ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_03de2dc08c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (2.3ms)[0m  [1m[35mALTER TABLE "notifications" ADD CONSTRAINT "fk_rails_9268535f02"
+FOREIGN KEY ("comment_id")
+  REFERENCES "comments" ("id")
+[0m
+  [1m[35m (2.2ms)[0m  [1m[35mALTER TABLE "posts" ADD CONSTRAINT "fk_rails_5b5ddfd518"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20170723121748)[0m
+  [1m[35m (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20170720085412),
+(20170721142525),
+(20170721142635),
+(20170721142753),
+(20170721142849),
+(20170721143023),
+(20170721143635),
+(20170721143710),
+(20170722124305),
+(20170722135226);
+
+[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-07-24 08:18:14.433331"], ["updated_at", "2017-07-24 08:18:14.433331"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "comments" CASCADE[0m
+  [1m[35m (6.7ms)[0m  [1m[35mCREATE TABLE "comments" ("id" bigserial primary key, "body" text, "user_id" bigint, "post_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE  INDEX  "index_comments_on_post_id" ON "comments"  ("post_id")[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE  INDEX  "index_comments_on_user_id" ON "comments"  ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "notifications" CASCADE[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE TABLE "notifications" ("id" bigserial primary key, "read" boolean DEFAULT 'f', "comment_id" bigint, "receiver_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE  INDEX  "index_notifications_on_comment_id" ON "notifications"  ("comment_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "posts" CASCADE[0m
+  [1m[35m (4.6ms)[0m  [1m[35mCREATE TABLE "posts" ("id" bigserial primary key, "title" character varying, "image" character varying, "body" text, "user_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, "link_url" character varying)[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE  INDEX  "index_posts_on_user_id" ON "posts"  ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "posts_topics" CASCADE[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "posts_topics" ("topic_id" bigint NOT NULL, "post_id" bigint NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "topics" CASCADE[0m
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE TABLE "topics" ("id" bigserial primary key, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "topics_users" CASCADE[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "topics_users" ("topic_id" bigint NOT NULL, "user_id" bigint NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE[0m
+  [1m[35m (4.6ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "username" character varying, "firstname" character varying, "lastname" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, "email" character varying, "admin" boolean DEFAULT 'f', "password_digest" character varying)[0m
+  [1m[35m (3.6ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_2fd19c0db7"
+FOREIGN KEY ("post_id")
+  REFERENCES "posts" ("id")
+[0m
+  [1m[35m (2.6ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_03de2dc08c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (2.2ms)[0m  [1m[35mALTER TABLE "notifications" ADD CONSTRAINT "fk_rails_9268535f02"
+FOREIGN KEY ("comment_id")
+  REFERENCES "comments" ("id")
+[0m
+  [1m[35m (3.3ms)[0m  [1m[35mALTER TABLE "posts" ADD CONSTRAINT "fk_rails_5b5ddfd518"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20170723121748)[0m
+  [1m[35m (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20170720085412),
+(20170721142525),
+(20170721142635),
+(20170721142753),
+(20170721142849),
+(20170721143023),
+(20170721143635),
+(20170721143710),
+(20170722124305),
+(20170722135226);
+
+[0m
+  [1m[35m (3.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-07-24 08:18:14.550170"], ["updated_at", "2017-07-24 08:18:14.550170"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (13.7ms)[0m  [1m[35mTRUNCATE users RESTART IDENTITY CASCADE[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "topics" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "LGBT+"], ["created_at", "2017-07-24 08:18:14.630754"], ["updated_at", "2017-07-24 08:18:14.630754"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "topics" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Environment"], ["created_at", "2017-07-24 08:18:14.633256"], ["updated_at", "2017-07-24 08:18:14.633256"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "topics" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Social Policy"], ["created_at", "2017-07-24 08:18:14.635058"], ["updated_at", "2017-07-24 08:18:14.635058"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "topics" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Cultural Diversity"], ["created_at", "2017-07-24 08:18:14.636917"], ["updated_at", "2017-07-24 08:18:14.636917"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "topics" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "World Issues"], ["created_at", "2017-07-24 08:18:14.638823"], ["updated_at", "2017-07-24 08:18:14.638823"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "topics" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Gender Equality"], ["created_at", "2017-07-24 08:18:14.640743"], ["updated_at", "2017-07-24 08:18:14.640743"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "topics" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Business"], ["created_at", "2017-07-24 08:18:14.642885"], ["updated_at", "2017-07-24 08:18:14.642885"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "topics" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Homelessness"], ["created_at", "2017-07-24 08:18:14.644674"], ["updated_at", "2017-07-24 08:18:14.644674"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "topics" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Arts"], ["created_at", "2017-07-24 08:18:14.646449"], ["updated_at", "2017-07-24 08:18:14.646449"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "mickyginger"], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "mickyginger"], ["firstname", "Mike"], ["lastname", "Hayden"], ["created_at", "2017-07-24 08:18:14.756818"], ["updated_at", "2017-07-24 08:18:14.756818"], ["email", "mike@ga.co"], ["password_digest", "$2a$10$pKCPOOj4LveAvlB5gsDLX.mScY9ogr2xXdHSJN6xDDbC2KYeXsCEy"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 1], ["user_id", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 4], ["user_id", 1]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "eisacke"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "eisacke"], ["firstname", "Emily"], ["lastname", "Isacke"], ["created_at", "2017-07-24 08:18:14.828493"], ["updated_at", "2017-07-24 08:18:14.828493"], ["email", "emily@ga.co"], ["password_digest", "$2a$10$OdZ1LGSzrGZmnLd5jDaSwOonqmdGNwbJeYQPuDonZxCXBkY.6C886"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 9], ["user_id", 2]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 7], ["user_id", 2]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 4], ["user_id", 2]]
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "markyjangles"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "markyjangles"], ["firstname", "Marc"], ["lastname", "De Vois"], ["created_at", "2017-07-24 08:18:14.903577"], ["updated_at", "2017-07-24 08:18:14.903577"], ["email", "mark@ga.co"], ["password_digest", "$2a$10$Gf/KrWDLEi1iU4rzINeHaOnqWEYDQK8O91FTq8fZkGfmTLPtdxMoK"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 4], ["user_id", 3]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 5], ["user_id", 3]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 9], ["user_id", 3]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 6], ["user_id", 3]]
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "JackyBN"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "JackyBN"], ["firstname", "Jack"], ["lastname", "May"], ["created_at", "2017-07-24 08:18:14.979333"], ["updated_at", "2017-07-24 08:18:14.979333"], ["email", "jack@email.co"], ["password_digest", "$2a$10$X4B62hpfkR.KbHnLkw5Ig.yphiLTg895UZWPBIZCarBFDo3lAROky"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 4], ["user_id", 4]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 5], ["user_id", 4]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 6], ["user_id", 4]]
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "MikeyDG"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "MikeyDG"], ["firstname", "Mike"], ["lastname", "de Groot"], ["created_at", "2017-07-24 08:18:15.052685"], ["updated_at", "2017-07-24 08:18:15.052685"], ["email", "mike@email.co"], ["password_digest", "$2a$10$oWSvaTk/Lr7Od.5dSEhF0eihfi3pnGIaYM0vu5WH021UkEr5ct7fW"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 2], ["user_id", 5]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 1], ["user_id", 5]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 4], ["user_id", 5]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 5], ["user_id", 5]]
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "BigAnge"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "BigAnge"], ["firstname", "Angela"], ["lastname", "Maugey"], ["created_at", "2017-07-24 08:18:15.127567"], ["updated_at", "2017-07-24 08:18:15.127567"], ["email", "ange@email.co"], ["password_digest", "$2a$10$v1JfWe7EiltR7ysRoBiLF.hQCl2H54U2nPnN6EZDMOUFmZlGcKCdi"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 2], ["user_id", 6]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 1], ["user_id", 6]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 9], ["user_id", 6]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 6], ["user_id", 6]]
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "SLD"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "SLD"], ["firstname", "Jason"], ["lastname", "Tason"], ["created_at", "2017-07-24 08:18:15.200821"], ["updated_at", "2017-07-24 08:18:15.200821"], ["email", "jason@email.co"], ["password_digest", "$2a$10$7D3fnMnB1L2an4JSZWrL7ubihmyxu4hjdsgFX0C/74gmjZcW8u1Hq"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 6], ["user_id", 7]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 4], ["user_id", 7]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 8], ["user_id", 7]]
+  [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "BigO"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "BigO"], ["firstname", "Olly"], ["lastname", "Middleton"], ["created_at", "2017-07-24 08:18:15.273066"], ["updated_at", "2017-07-24 08:18:15.273066"], ["email", "olly@email.co"], ["password_digest", "$2a$10$KJigKIa8DYPWuxUvQAA/mO51sIrEIZWNzDAIay3lUiCVbZyjdy55G"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 2], ["user_id", 8]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 5], ["user_id", 8]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "LittleO"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "LittleO"], ["firstname", "Alex"], ["lastname", "Okamoto"], ["created_at", "2017-07-24 08:18:15.344571"], ["updated_at", "2017-07-24 08:18:15.344571"], ["email", "alexO@email.co"], ["password_digest", "$2a$10$hMG1fylqFsnf30OBm8qcseUSVQVAzIAJz3A0E0Q3AV6gzzG0/63uG"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 3], ["user_id", 9]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "Biff"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "Biff"], ["firstname", "Beth"], ["lastname", "Rice"], ["created_at", "2017-07-24 08:18:15.412330"], ["updated_at", "2017-07-24 08:18:15.412330"], ["email", "beth@email.co"], ["password_digest", "$2a$10$zzc.Vh6w5Nxwg04RuDX75OT1ZTE2m7sA7Mvf/.XT2PCTIVMPD8HwK"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 6], ["user_id", 10]]
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "AlexCats"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "AlexCats"], ["firstname", "Alex"], ["lastname", "Cviek"], ["created_at", "2017-07-24 08:18:15.480711"], ["updated_at", "2017-07-24 08:18:15.480711"], ["email", "alexC@email.co"], ["password_digest", "$2a$10$4u3zHBR3dubBZpRpnMmmuOP9XHzqGJ49b5nVT8pg.oPZf6uyc3CYa"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 2], ["user_id", 11]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "Lozza"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "Lozza"], ["firstname", "Lauren"], ["lastname", "Armbrust"], ["created_at", "2017-07-24 08:18:15.552394"], ["updated_at", "2017-07-24 08:18:15.552394"], ["email", "lauren@email.co"], ["password_digest", "$2a$10$.U05OdIMlY5Y.CZrl.ksHu9v0KR7Fil110rwwhG11H9ufF4EYy6fa"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 9], ["user_id", 12]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 6], ["user_id", 12]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "topics_users" ("topic_id", "user_id") VALUES ($1, $2)[0m  [["topic_id", 7], ["user_id", 12]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "posts" ("title", "body", "user_id", "created_at", "updated_at", "link_url") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Chalcots Estate evacuations"], ["body", "I have a close friend who has been evacuated from one of these blocks. The council have not been in touch with any formal documentation to why they were moved in the first place, and now they've been asked to move back with no proof that it is now safe. My friend is a single mother with two kids, she's been in a hotel room with them for the last 3 weeks just to be told that she would be charged as of Monday if she didn't move back in. If the blocks are so safe, why are there still Fire Marshals on each floor? Someone needs to give answers!"], ["user_id", 6], ["created_at", "2017-07-24 08:18:15.597554"], ["updated_at", "2017-07-24 08:18:15.597554"], ["link_url", "http://camdennewjournal.com/article/chalcots-home-lawyers"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 3], ["post_id", 1]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "posts" ("title", "image", "body", "user_id", "created_at", "updated_at", "link_url") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Protesting Commercialism at London Pride"], ["image", "http://i.imgur.com/nYtXaWk.jpg"], ["body", "Many people in the LGBT+ community are against the commercialism of pride. Yes, money is needed to put on the event but why is it that smaller organisations such as social activist groups, should have to pay to be involved? A part of the community let their voices be heard pride weekend. We made our way to the front and refused to more unless our voices were heard!"], ["user_id", 6], ["created_at", "2017-07-24 08:18:15.605383"], ["updated_at", "2017-07-24 08:18:15.605383"], ["link_url", "http://www.huffingtonpost.co.uk/entry/london-pride-dup_uk_59612661e4b0d5b458eacfd5"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 1], ["post_id", 2]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "posts" ("title", "body", "user_id", "created_at", "updated_at", "link_url") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Why has R.Kelly not been stopped before this?"], ["body", "I remember being younger and hearing about R.Kelly and Aaliyah getting married. It's shocking how he able to continue his behaviour"], ["user_id", 4], ["created_at", "2017-07-24 08:18:15.612807"], ["updated_at", "2017-07-24 08:18:15.612807"], ["link_url", "https://www.vox.com/first-person/2017/7/21/16008230/r-kelly-sex-cult-abuse"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 5], ["post_id", 3]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 6], ["post_id", 3]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "posts" ("title", "image", "body", "user_id", "created_at", "updated_at", "link_url") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Illegal Rainforest Destruction"], ["image", "http://i.imgur.com/QX4BDut.jpg"], ["body", "A few top global brands have been accused of using palm oil from the Sumatra's rainforest to produce loads of their products. This is pretty devastating, why are there never any repercussions for people doing this?"], ["user_id", 1], ["created_at", "2017-07-24 08:18:15.620926"], ["updated_at", "2017-07-24 08:18:15.620926"], ["link_url", "https://www.theguardian.com/environment/2017/jul/21/pepsico-unilever-and-nestle-accused-of-complicity-in-illegal-rainforest-destruction"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 2], ["post_id", 4]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 5], ["post_id", 4]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "posts" ("title", "body", "user_id", "created_at", "updated_at", "link_url") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "March for More Happiness"], ["body", "Going to this march in August. A massive street party to get together and share some ideas."], ["user_id", 1], ["created_at", "2017-07-24 08:18:15.628506"], ["updated_at", "2017-07-24 08:18:15.628506"], ["link_url", "https://www.eventbrite.com/e/march-for-more-happiness-tickets-35923941476?aff=es2"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 3], ["post_id", 5]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 5], ["post_id", 5]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "posts" ("title", "image", "body", "user_id", "created_at", "updated_at", "link_url") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Social housing residents being moved out of London"], ["image", "http://i.imgur.com/JI5qQbh.jpg"], ["body", "I know this has been happening for a while but it's still pretty shocking. People are being forced out of houses and areas they've lived in for generations. Families and support units are being torn apart."], ["user_id", 1], ["created_at", "2017-07-24 08:18:15.636089"], ["updated_at", "2017-07-24 08:18:15.636089"], ["link_url", "http://www.bbc.co.uk/news/uk-england-london-39386587"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 8], ["post_id", 6]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 3], ["post_id", 6]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "posts" ("title", "body", "user_id", "created_at", "updated_at", "link_url") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Environment Graphic Novels you may be interested in"], ["body", "Hey guys, only just stumbled across a few of these graphic novels. Thought I'd put them up here incase anyone else is into similar!"], ["user_id", 1], ["created_at", "2017-07-24 08:18:15.643562"], ["updated_at", "2017-07-24 08:18:15.643562"], ["link_url", "http://www.sierraclub.org/sierra/2015-1-january-february/green-life/4-thought-provoking-graphic-novels-about-environment"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 5], ["post_id", 7]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 9], ["post_id", 7]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "posts" ("title", "image", "body", "user_id", "created_at", "updated_at", "link_url") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "Oil Spillage Invention"], ["image", "http://i.imgur.com/uzKl9zh.jpg"], ["body", "Been reading up on this new invention that is hopefully going to help the issue of cleaning up oil spillages."], ["user_id", 1], ["created_at", "2017-07-24 08:18:15.651627"], ["updated_at", "2017-07-24 08:18:15.651627"], ["link_url", "http://www.huffingtonpost.ca/2017/03/07/oil-spill-sponge_n_15218072.html"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 2], ["post_id", 8]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 5], ["post_id", 8]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "posts" ("title", "image", "body", "user_id", "created_at", "updated_at", "link_url") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["title", "People are kicking off about the new Doctor Who being a woman"], ["image", "http://i.imgur.com/DcUJ6k3.jpg"], ["body", "I mean, this is actually ridiculous. As if there aren't enough male role models in Sci-fi for men."], ["user_id", 2], ["created_at", "2017-07-24 08:18:15.659881"], ["updated_at", "2017-07-24 08:18:15.659881"], ["link_url", "http://www.vulture.com/2017/07/a-former-doctor-who-doctor-isnt-pleased-with-female-casting.html"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 6], ["post_id", 9]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 9], ["post_id", 9]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "posts" ("title", "body", "user_id", "created_at", "updated_at", "link_url") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "This kid is doing amazing things"], ["body", "I first heard about Mo whilst listening to The Read podcasts. He started out when he was 13 making bow ties and selling them. He recently got an NBA contract at 15! He's an inspiration to other young black entreprenuers out there! Check him out and give him some business!"], ["user_id", 2], ["created_at", "2017-07-24 08:18:15.667556"], ["updated_at", "2017-07-24 08:18:15.667556"], ["link_url", "https://www.mosbowsmemphis.com/"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 4], ["post_id", 10]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 7], ["post_id", 10]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "posts" ("title", "body", "user_id", "created_at", "updated_at", "link_url") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Mikaila Ulmer, Lemonade"], ["body", "Reading about Mikaila is unreal. She was just 4 when she was sent her Granny Helen's lemonade recipe. Since then she has worked to build her own little lemonade empire, using locally sourced honey to sweeten her drinks (a decision made after she was stung a couple of times). Her drinks are now being sold in Wholefoods after scoring a lucritive contract!"], ["user_id", 2], ["created_at", "2017-07-24 08:18:15.675481"], ["updated_at", "2017-07-24 08:18:15.675481"], ["link_url", "https://meandthebees.com/"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 4], ["post_id", 11]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 7], ["post_id", 11]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "posts" ("title", "body", "user_id", "created_at", "updated_at", "link_url") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "UK podcast that's well worth a listen"], ["body", "Satia and Imre talk about topical subjects to do with diversity in the UK, on a weekly basis. If you like the show, check out the rest on the ShoutOut Network."], ["user_id", 2], ["created_at", "2017-07-24 08:18:15.683581"], ["updated_at", "2017-07-24 08:18:15.683581"], ["link_url", "http://shoutoutnetwork.co.uk/shows/melanin-millennials/"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 4], ["post_id", 12]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 7], ["post_id", 12]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "posts" ("title", "body", "user_id", "created_at", "updated_at", "link_url") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Gender Pay gap in BBC"], ["body", "What is happening in the BBC in relation to the gender pay gap is shocking. How is it that someone like Chris Evans manages to get so much cash. It's 2017 people, equality for all!"], ["user_id", 3], ["created_at", "2017-07-24 08:18:15.691755"], ["updated_at", "2017-07-24 08:18:15.691755"], ["link_url", "http://www.huffingtonpost.com/entry/bbc-pay-gap-letter_us_5974c053e4b09e5f6ccff001"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 6], ["post_id", 13]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 9], ["post_id", 13]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "posts" ("title", "body", "user_id", "created_at", "updated_at", "link_url") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Haiti prison population"], ["body", "I recently watched this documentary of the treatment of prisoners within the Haiti legal system. It seems mad that people still keep legal records on paper and the only way to fix a problem is to find a file amongst thousands of others. 80% of inmates have been locked up without actually being convicted of a crime. Many of them have never gone to trial, have not been released after being found not guilty or have not been released when new evidence comes to light that they must be innocent."], ["user_id", 3], ["created_at", "2017-07-24 08:18:15.699987"], ["updated_at", "2017-07-24 08:18:15.699987"], ["link_url", "http://www.channel4.com/programmes/unreported-world/on-demand/63201-014"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 5], ["post_id", 14]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 4], ["post_id", 14]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "posts" ("title", "body", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Art exhibitions"], ["body", "Does anyone know of any art exhibitions coming up in the near future in London?"], ["user_id", 3], ["created_at", "2017-07-24 08:18:15.706695"], ["updated_at", "2017-07-24 08:18:15.706695"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 9], ["post_id", 15]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "posts" ("title", "body", "user_id", "created_at", "updated_at", "link_url") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Excellent book, must read!"], ["body", "Was passed this book by a friend...'Why I'm No Longer Talking To White People About Race' by Reni Eddo Lodge. Both informative and personal, the book taught me a lot. There's a great few chapters on UK Black history, things that are not taught in school! Honestly would encourage, everyone to check it out!"], ["user_id", 4], ["created_at", "2017-07-24 08:18:15.713960"], ["updated_at", "2017-07-24 08:18:15.713960"], ["link_url", "http://renieddolodge.co.uk/"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 9], ["post_id", 16]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts_topics" ("topic_id", "post_id") VALUES ($1, $2)[0m  [["topic_id", 4], ["post_id", 16]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "I can't believe the way people have just expected to take the council's word that everything is alright. Especially after they weren't to be trusted in the first place when they made the original work that was unsafe!"], ["user_id", 4], ["post_id", 1], ["created_at", "2017-07-24 08:18:15.734454"], ["updated_at", "2017-07-24 08:18:15.734454"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "My friend said any compensation they received as had to go on eating out all the time. They've also received news that the council tax will be going up from next month!"], ["user_id", 6], ["post_id", 1], ["created_at", "2017-07-24 08:18:15.738648"], ["updated_at", "2017-07-24 08:18:15.738648"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "This looks amazing! I know that I'd rather see minority groups than big banking floats in the parade!"], ["user_id", 10], ["post_id", 2], ["created_at", "2017-07-24 08:18:15.741852"], ["updated_at", "2017-07-24 08:18:15.741852"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "Are there any lgbt+ groups that you know that I could tag along to?"], ["user_id", 10], ["post_id", 2], ["created_at", "2017-07-24 08:18:15.744863"], ["updated_at", "2017-07-24 08:18:15.744863"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "I go to the Sexual Avengers, we usually meet on Wednesday evenings at the LimeWharf in Bethnal Green form 7pm. You should come to a meeting some time, see if you like it."], ["user_id", 6], ["post_id", 2], ["created_at", "2017-07-24 08:18:15.747792"], ["updated_at", "2017-07-24 08:18:15.747792"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "How is anyone still buying his music?!"], ["user_id", 8], ["post_id", 3], ["created_at", "2017-07-24 08:18:15.750671"], ["updated_at", "2017-07-24 08:18:15.750671"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "There was a case not so long ago, but he was not found guilty. It's like the women he is targetting are falling through the cracks and not cared about"], ["user_id", 9], ["post_id", 3], ["created_at", "2017-07-24 08:18:15.753908"], ["updated_at", "2017-07-24 08:18:15.753908"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "It really won't be long until there's no rainforest left :("], ["user_id", 4], ["post_id", 4], ["created_at", "2017-07-24 08:18:15.756712"], ["updated_at", "2017-07-24 08:18:15.756712"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "It's so sad to think that once these forests are gone, there's no coming back. The loss of all those trees and animals!"], ["user_id", 8], ["post_id", 4], ["created_at", "2017-07-24 08:18:15.759450"], ["updated_at", "2017-07-24 08:18:15.759450"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "I'll see you there, I'm planning on coming too!"], ["user_id", 2], ["post_id", 5], ["created_at", "2017-07-24 08:18:15.762292"], ["updated_at", "2017-07-24 08:18:15.762292"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "I've written to my local MP about this. Will post a copy of my open letter if anyone wants to send on?"], ["user_id", 5], ["post_id", 6], ["created_at", "2017-07-24 08:18:15.765117"], ["updated_at", "2017-07-24 08:18:15.765117"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "Thanks so much for posting this!"], ["user_id", 11], ["post_id", 7], ["created_at", "2017-07-24 08:18:15.767977"], ["updated_at", "2017-07-24 08:18:15.767977"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "This is incredible!"], ["user_id", 7], ["post_id", 8], ["created_at", "2017-07-24 08:18:15.770950"], ["updated_at", "2017-07-24 08:18:15.770950"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "Would love to work on this kind of thing in the future"], ["user_id", 5], ["post_id", 8], ["created_at", "2017-07-24 08:18:15.773592"], ["updated_at", "2017-07-24 08:18:15.773592"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "People need to get in line with the current times! From what I know, the Doctor can change into a different person right?! I thought that was how they've explained the different actors playing the lead."], ["user_id", 9], ["post_id", 9], ["created_at", "2017-07-24 08:18:15.776923"], ["updated_at", "2017-07-24 08:18:15.776923"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "I agree, what does it matter who plays the character. The previous actor in the article seems miss informed as to how many inspirational male characters there are in Sci-fi"], ["user_id", 6], ["post_id", 9], ["created_at", "2017-07-24 08:18:15.779724"], ["updated_at", "2017-07-24 08:18:15.779724"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "There are barely any women in Sci-fi. This is excellent to inspire young girls, who must often turn on the TV and see noone they can see themselves in."], ["user_id", 3], ["post_id", 9], ["created_at", "2017-07-24 08:18:15.782481"], ["updated_at", "2017-07-24 08:18:15.782481"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "Such an inspiration! How does he find the time to set up a business inbetween school work?!"], ["user_id", 1], ["post_id", 10], ["created_at", "2017-07-24 08:18:15.785036"], ["updated_at", "2017-07-24 08:18:15.785036"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "How is a four year old so business savvy? She's going to do big things in the future if she's managed to get such a huge contract at such a young age."], ["user_id", 11], ["post_id", 11], ["created_at", "2017-07-24 08:18:15.787607"], ["updated_at", "2017-07-24 08:18:15.787607"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "We need more UK podcasts like this, will check out the others on the ShoutOut Network for sure."], ["user_id", 4], ["post_id", 12], ["created_at", "2017-07-24 08:18:15.790314"], ["updated_at", "2017-07-24 08:18:15.790314"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "There's actually a live show coming up in London. Think all the tickets are sold out now but keep an eye out for future events!"], ["user_id", 10], ["post_id", 12], ["created_at", "2017-07-24 08:18:15.792845"], ["updated_at", "2017-07-24 08:18:15.792845"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "It's kind of upsetting to pay a TV License to a company that is actively keeping the gender pay gap alive and well."], ["user_id", 4], ["post_id", 13], ["created_at", "2017-07-24 08:18:15.795697"], ["updated_at", "2017-07-24 08:18:15.795697"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "It's really not a great example to encourage any women to get into that kind of industry, if everyone isn't paid fairly for the work they do. It's pretty appalling that this is happening in 2017"], ["user_id", 5], ["post_id", 13], ["created_at", "2017-07-24 08:18:15.798557"], ["updated_at", "2017-07-24 08:18:15.798557"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "Thanks for the link sharing. Really informative documentary!"], ["user_id", 4], ["post_id", 14], ["created_at", "2017-07-24 08:18:15.801349"], ["updated_at", "2017-07-24 08:18:15.801349"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "Anyone interested in prison reform should also check out some of Angela Davis' essays on abolishing prisons."], ["user_id", 6], ["post_id", 14], ["created_at", "2017-07-24 08:18:15.804085"], ["updated_at", "2017-07-24 08:18:15.804085"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "There's the 'Soul of a Nation' exhibition on at the Tate. http://www.tate.org.uk/whats-on/tate-modern/exhibition/soul-nation-art-age-black-power"], ["user_id", 5], ["post_id", 15], ["created_at", "2017-07-24 08:18:15.806960"], ["updated_at", "2017-07-24 08:18:15.806960"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "Thank you! Will check it out."], ["user_id", 3], ["post_id", 15], ["created_at", "2017-07-24 08:18:15.810258"], ["updated_at", "2017-07-24 08:18:15.810258"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "I've been to a panel talk that Reni did. She is an amazing speaker and it's a great book. I too learnt lots that I had no idea about. I know a few people who could benefit from reading this!"], ["user_id", 6], ["post_id", 16], ["created_at", "2017-07-24 08:18:15.813138"], ["updated_at", "2017-07-24 08:18:15.813138"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1347200930821886805);[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(1347200930821886805)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
