@@ -37,8 +37,8 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1
   def destroy
-    return render json: { errors: ["Unauthorized"] } if @event.user != current_user
-    @event.destroy
+    return render json: { errors: ["Unauthorized"] } if @post.user != current_user
+    @post.destroy
   end
 
   private
