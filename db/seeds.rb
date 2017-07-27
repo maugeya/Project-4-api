@@ -21,8 +21,6 @@ topic = Topic.create!([
     name: "Homelessness"
   },{
     name: "Arts"
-  },{
-    name: "My Tags"
   }
 
   ])
