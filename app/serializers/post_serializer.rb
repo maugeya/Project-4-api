@@ -10,4 +10,6 @@ class PostSerializer < ActiveModel::Serializer
   def shortDescription
      object.body.truncate(120)
   end
+
+
 end
