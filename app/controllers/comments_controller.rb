@@ -62,7 +62,7 @@ class CommentsController < ApplicationController
 
     def create_notifications(comment)
       @notifications = mention_ids.map do |mention_id|
-        Notification.create! receiver_id: mention_id, comment_id: comment.id, post_id: comment.post_id
+        Notification.create! receiver_id: mention_id, comment_id: comment.id, post_id: comment.post_id, sender: comment.user.username
       end
     end
 end
